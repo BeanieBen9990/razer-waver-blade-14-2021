@@ -48,8 +48,15 @@ nb_frames = int(duration * fps)
 delta_hue_frames = 1 / nb_frames
 for i_frame in range(nb_frames):
     frames.append({})
-    delta_hue_col = 1 / cols
-    for i_col in range(cols):
+    delta_hue_col = 1 / (cols-2)
+    hue = (i_frame * delta_hue_frames + 1  * delta_hue_col) % 1
+    rgb = [int(255 * c) for c in colorsys.hsv_to_rgb(hue, 1, 1)]
+    hex_color = "#FFFFFF".format(*rgb)
+    frow_values = {}
+    for i in range(rows):
+        frow_values[str(i)] = hex_color
+    frames[-1]['0'] = frow_values
+    for i_col in range(1,cols-1):
         hue = (i_frame * delta_hue_frames + i_col * delta_hue_col) % 1
         rgb = [int(255 * c) for c in colorsys.hsv_to_rgb(hue, 1, 1)]
         hex_color = "#{:02x}{:02x}{:02x}".format(*rgb)
@@ -57,9 +64,28 @@ for i_frame in range(nb_frames):
         for i_rows in range(rows):
             row_values[str(i_rows)] = hex_color  # Constant across rows
         frames[-1][str(i_col)] = row_values
+    lrow_values = {}
+    for i in range(6):
+        lrow_values[str(i)] = frames[-1]['14']['0']
+    frames[-1]['15'] = lrow_values
+    frames[-1]['14']['5'] = frames[-1]['15']['5']
+    frames[-1]['15']['5'] = frames[-1]['13']['5']
+    frames[-1]['5']['5'] = frames[-1]['3']['5']
+    frames[-1]['4']['5'] = frames[-1]['3']['5']
+    frames[-1]['3']['5'] = frames[-1]['2']['5']
+    frames[-1]['2']['5'] = frames[-1]['1']['5']
+    frames[-1]['12']['5'] = frames[-1]['11']['5']
+    frames[-1]['11']['5'] = frames[-1]['10']['5']
+    for i in range(0,5):
+        frames[-1]['15'][str(i)] = frames[-1]['14'][str(i)]
+    frames[-1]['14']['0'] = frames[-1]['13']['0']
+    frames[-1]['14']['5'] = frames[-1]['15']['4']
+    for i in range(12,2,-1):
+        frames[-1][str(i)]['4'] = frames[-1][str(i-1)]['4']
 
 if direction == 'LR':
     data["frames"] = frames[::-1]
+
 
 save_path = os.path.expanduser(args.output)
 if os.path.exists(save_path):
