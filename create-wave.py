@@ -7,11 +7,6 @@ parser = argparse.ArgumentParser(description="Generate an RGB wave effect for po
 parser.add_argument("-d", "--duration", help="Wave period in seconds. Default is 5.", default="5")
 parser.add_argument("-D", "--direction", help="Wave direction. `LR` for left to right, `RL` for right to left. Default is `LR`", default='LR')
 parser.add_argument("--fps", help="Frames per seconds of the wave. Defaults to 24.", default='24')
-parser.add_argument("--device", help="Name of the Razer device. Defaults to `Razer Ornata V2`. Please, enter the real name of the device, "
-                                     "as it shows up in Polychromatic. You will probably need to fix the number of rows and columns"
-                                     " so they fit your device, using `-r` and `-c` parameters. To know how many columns and rows your "
-                                     "device has, you can create a dummy Polychromatic effect and check how many rows/columns appear in the "
-                                     "matrix. Underglow should be supported with the correct values.", default="Razer Ornata V2")
 parser.add_argument("-o", "--output", help="Output file path. Default is `~/.config/polychromatic/effects/wave.json`", default="~/.config/polychromatic/effects/wave.json")
 
 args = parser.parse_args()
@@ -19,15 +14,15 @@ direction = args.direction
 cols = 16
 rows = 6
 duration = float(args.duration)  # seconds
-device = args.device
+device = "Razer Blade 14 2021"
 fps = int(args.fps)
 name = args.output.split("/")[-1].split(".")[0].title()
 frames = []
 
 data = {"name": name,
         "type": 3,
-        "author": "Teskann",
-        "author_url": "https://github.com/Teskann/razer-waver",
+        "author": "Beanie",
+        "author_url": "https://github.com/BeanieBen9990/razer-waver-blade-14-2021",
         "icon": "img/options/wave.svg",
         "summary": "",
         "map_device": device,
