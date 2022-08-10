@@ -7,8 +7,6 @@ parser = argparse.ArgumentParser(description="Generate an RGB wave effect for po
 parser.add_argument("-d", "--duration", help="Wave period in seconds. Default is 5.", default="5")
 parser.add_argument("-D", "--direction", help="Wave direction. `LR` for left to right, `RL` for right to left. Default is `LR`", default='LR')
 parser.add_argument("--fps", help="Frames per seconds of the wave. Defaults to 24.", default='24')
-parser.add_argument("-c", "--columns", help="Number of columns in the keyboard. Default is 22.", default="22")
-parser.add_argument("-r", "--rows", help="Number of rows in the keyboard. Default is 6.", default="6")
 parser.add_argument("--device", help="Name of the Razer device. Defaults to `Razer Ornata V2`. Please, enter the real name of the device, "
                                      "as it shows up in Polychromatic. You will probably need to fix the number of rows and columns"
                                      " so they fit your device, using `-r` and `-c` parameters. To know how many columns and rows your "
@@ -18,8 +16,8 @@ parser.add_argument("-o", "--output", help="Output file path. Default is `~/.con
 
 args = parser.parse_args()
 direction = args.direction
-cols = int(args.columns)
-rows = int(args.rows)
+cols = 16
+rows = 6
 duration = float(args.duration)  # seconds
 device = args.device
 fps = int(args.fps)
